@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional Guard V2 - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Admin Authentication Overlay -->
+    <div id="admin-auth-container" class="auth-container">
+        <div class="login-card">
+            <!-- Login View -->
+            <div id="login-view">
+                <div class="login-header">
+                    <div class="login-logo">🔒</div>
+                    <h2>Connexion Admin</h2>
+                    <p>Emotional Guard V2 - Dashboard</p>
+                </div>
+
+                <div id="admin-login-error" class="error-msg"
+                    style="display:none; color: var(--danger); margin-bottom: 1rem; font-size: 0.85rem;">Email ou mot de
+                    passe incorrect.</div>
+
+                <form class="login-form" id="admin-login-form">
+                    <div class="form-group">
+                        <label>Email professionnel</label>
+                        <input type="email" id="admin-email" placeholder="admin@ecole.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" id="admin-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary login-btn">
+                        Accéder au Dashboard
+                    </button>
+                </form>
+                <p style="margin-top: 1.5rem; font-size: 0.85rem; text-align: center;">
+                    Pas encore de compte ? <a href="#" onclick="showAuthView('register')"
+                        style="color: var(--primary); font-weight: 600;">S'enregistrer</a>
+                </p>
+            </div>
+
+            <!-- Register View -->
+            <div id="register-view" style="display: none;">
+                <div class="login-header">
+                    <div class="login-logo">📝</div>
+                    <h2>Créer un compte</h2>
+                    <p>Inscrivez-vous pour gérer le dashboard</p>
+                </div>
+
+                <div id="admin-register-error" class="error-msg"
+                    style="display:none; color: var(--danger); margin-bottom: 1rem; font-size: 0.85rem;">Erreur lors de
+                    l'inscription.</div>
+
+                <form class="login-form" id="admin-register-form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <input type="text" id="reg-nom" placeholder="Dupont" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Prénom</label>
+                            <input type="text" id="reg-prenom" placeholder="Marc" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email pro</label>
+                        <input type="email" id="reg-email" placeholder="m.dupont@ecole.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rôle</label>
+                        <select id="reg-role" required
+                            style="padding: 0.75rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white; font-size: 1rem;">
+                            <option value="">Sélectionnez votre rôle</option>
+                            <option value="ADMINISTRATEUR">👨‍💼 Administrateur</option>
+                            <option value="CONSEILLER">🧑‍⚕️ Conseiller / Psychologue</option>
+                            <option value="ELEVE">🎓 Étudiant</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Mot de passe</label>
+                        <input type="password" id="reg-password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary login-btn">
+                        Créer mon compte
+                    </button>
+                </form>
+                <p style="margin-top: 1.5rem; font-size: 0.85rem; text-align: center;">
+                    Déjà un compte ? <a href="#" onclick="showAuthView('login')"
+                        style="color: var(--primary); font-weight: 600;">Se connecter</a>
+                </p>
+            </div>
+
+            <p style="margin-top: 2rem; font-size: 0.75rem; color: var(--text-muted); text-align: center;">
+                &copy; 2026 Eco-Emotion-Guard. Tous droits réservés.
+            </p>
+        </div>
+    </div>
+
+    <div class="app-container" id="main-app-container" style="display: none;">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-orb"></div>
+                <span class="logo-text">EmoStud</span>
+            </div>
+
+            <nav class="nav-links">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                        </path>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-view="alerts">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                    <span>Alertes</span>
+                </a>
+                <a href="#" class="nav-item" data-view="users">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    <span>Utilisateurs</span>
+                </a>
+                <a href="#" class="nav-item" data-view="interventions">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                        </path>
+                    </svg>
+                    <span>Interventions</span>
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                        </path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="logoutAdmin()">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
+                        </path>
+                    </svg>
+                    <span>Déconnexion</span>
+                </a>
+            </nav>
+
+            <div class="user-profile-small">
+                <div class="status-dot"></div>
+                <img src="avatar.png" alt="Admin" class="avatar">
+                <div class="profile-info">
+                    <h4 id="user-name">Admin User</h4>
+                    <p id="user-role">Super Admin</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="view-title">Dashboard</h1>
+                </div>
+                <div class="top-actions">
+                    <div class="search-box">
+                        <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" placeholder="Rechercher...">
+                    </div>
+                    <button class="btn btn-primary" id="add-new-btn">
+                        <svg style="width:16px;height:16px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4">
+                            </path>
+                        </svg>
+                        Ajouter
+                    </button>
+                </div>
+            </header>
+
+            <div id="view-container" class="dashboard-view">
+                <!-- Stats Widgets -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(99, 102, 241, 0.1); color: var(--primary);">
+                            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
+                                </path>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-alerts">0</h3>
+                            <p>Alertes Actives</p>
+                        </div>
+                        <div class="trend up">
+                            <svg style="width:12px;height:12px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                            </svg>
+                            <span>+12% vs hier</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--accent);">
+                            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-interventions">0</h3>
+                            <p>Interventions</p>
+                        </div>
+                        <div class="trend up">
+                            <span>Stable</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                            <svg style="width:24px;height:24px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="stat-avg-response">14m</h3>
+                            <p>Temps de réponse</p>
+                        </div>
+                        <div class="trend down">
+                            <svg style="width:12px;height:12px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                            </svg>
+                            <span>-5m</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card ai-status-card">
+                        <div class="ai-orb-small"></div>
+                        <div class="stat-info">
+                            <h3>Online</h3>
+                            <p>Moteur d'Analyse IA</p>
+                        </div>
+                        <div class="trend up">
+                            <span>99.9% Uptime</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid-main">
+                    <!-- Table Card -->
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h2 id="table-title">Alertes Récentes</h2>
+                            <button class="btn btn-ghost">Voir tout</button>
+                        </div>
+                        <div class="table-container">
+                            <table id="main-table">
+                                <thead>
+                                    <!-- Will be filled by JS -->
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Will be filled by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Live Insights Panel -->
+                    <div class="insights-panel">
+                        <div class="card-header">
+                            <h2>IA Insights</h2>
+                            <div class="live-tag">LIVE</div>
+                        </div>
+                        <div class="insights-list" id="insights-list">
+                            <div class="insight-item">
+                                <div class="insight-dot blink"></div>
+                                <div class="insight-content">
+                                    <p>Analyse de sentiment en cours...</p>
+                                    <span>Il y a 2 min</span>
+                                </div>
+                            </div>
+                            <div class="insight-item">
+                                <div class="insight-dot" style="background: var(--accent);"></div>
+                                <div class="insight-content">
+                                    <p>Tendance : Anxiété en baisse (-15%)</p>
+                                    <span>Il y a 15 min</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Modal for CRUD -->
+    <div class="modal-backdrop" id="crud-modal">
+        <div class="modal">
+            <h2 id="modal-title" style="margin-bottom: 1.5rem;">Ajouter un élément</h2>
+            <form id="crud-form">
+                <div id="form-fields">
+                    <!-- Dynamic fields -->
+                </div>
+                <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" class="btn btn-ghost" id="close-modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Student Support Floating Button -->
+    <button class="student-support-btn" id="open-student-portal">
+        <span class="heart-pulse">❤️</span>
+        Besoin d'aide ?
+    </button>
+
+    <!-- Student Assistance Modal (Separate Window) -->
+    <div class="modal-backdrop" id="student-modal">
+        <div class="modal student-modal-content">
+            <div class="modal-header-empathetic">
+                <div class="student-avatar-large">🎓</div>
+                <h2>Espace de Soutien Étudiant</h2>
+                <p>Ton bien-être est notre priorité. Parle-nous de ce que tu ressens.</p>
+            </div>
+
+            <div id="student-test-content" class="student-test-body">
+                <!-- Login View -->
+                <div id="student-login-view" class="login-step">
+                    <p>Entre ton identifiant scolaire pour continuer.</p>
+                    <div class="form-group" style="margin: 1.5rem 0;">
+                        <input type="text" id="student-school-id" placeholder="Ex: EDU-JEAN-001"
+                            style="text-align:center;">
+                        <div id="login-error" class="error-text"
+                            style="display:none; color: var(--danger); margin-top: 0.5rem; font-size: 0.8rem;"></div>
+                    </div>
+                    <button class="btn btn-primary btn-lg" style="width:100%;" onclick="attemptStudentLogin()">Se
+                        connecter</button>
+                    <p style="font-size: 0.75rem; margin-top: 1rem; color: var(--text-muted);">Tes réponses resteront
+                        confidentielles.</p>
+                </div>
+
+                <!-- Test Intro View (Hidden initially) -->
+                <div id="student-intro-view" class="test-intro" style="display:none;">
+                    <p>Bonjour <span id="logged-student-name"></span> !<br>Ce petit test rapide permet de prévenir un
+                        conseiller que tu ne te sens pas bien.</p>
+                    <button class="btn btn-primary btn-lg" onclick="startStudentTest()">Lancer l'alerte & Faire le
+                        test</button>
+                </div>
+            </div>
+
+            <div class="modal-footer-minimal">
+                <button class="btn btn-ghost" id="close-student-modal">Plus tard</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

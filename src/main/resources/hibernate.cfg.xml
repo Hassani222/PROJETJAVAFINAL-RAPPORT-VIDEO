@@ -1,0 +1,29 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Paramètres JDBC -->
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3308/ecole_db_v2?useSSL=false&amp;allowPublicKeyRetrieval=true</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">root</property>
+
+        <property name="connection.pool_size">10</property>
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hbm2ddl.auto">update</property>
+        <property name="show_sql">true</property>
+        <property name="format_sql">true</property>
+
+        <!-- Mapping des classes -->
+        <mapping class="com.ecole.model.Utilisateur"/>
+        <mapping class="com.ecole.model.Eleve"/>
+        <mapping class="com.ecole.model.Conseiller"/>
+        <mapping class="com.ecole.model.AlerteEmotionnelle"/>
+        <mapping class="com.ecole.model.Intervention"/>
+        <mapping class="com.ecole.model.Rapport"/>
+        <mapping class="com.ecole.model.Notification"/>
+        <mapping class="com.ecole.model.Administrateur"/>
+        <mapping class="com.ecole.model.Enseignant"/>
+    </session-factory>
+</hibernate-configuration>

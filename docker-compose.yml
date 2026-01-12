@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecole_db_v2
+    ports:
+      - "3308:3306" # Port changé pour éviter les conflits
+    volumes:
+      - db_data_v2:/var/lib/mysql
+
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - WAIT_HOSTS=db:3306
+      - DB_URL=jdbc:mysql://db:3306/ecole_db_v2?useSSL=false&allowPublicKeyRetrieval=true
+    ports:
+      - "7000:7000"
+    restart: on-failure
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: emotional-guard-phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      - db
+
+volumes:
+  db_data_v2:

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail Étudiant - Emotional Guard</title>
+    <link rel="stylesheet" href="student-styles.css">
+</head>
+
+<body>
+    <!-- Login Container -->
+    <div id="student-login-container" class="auth-container active">
+        <div class="auth-card">
+            <div class="logo-section">
+                <div class="logo-icon">💙</div>
+                <h1>Portail Étudiant</h1>
+                <p>Emotional Guard - Espace Personnel</p>
+            </div>
+
+            <form id="student-login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="student-email">Email</label>
+                    <input type="email" id="student-email" placeholder="ton.email@ecole.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="student-password">Mot de passe</label>
+                    <input type="password" id="student-password" placeholder="••••••••" required>
+                </div>
+                <div id="login-error" class="error-message"></div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Student Dashboard -->
+    <div id="student-dashboard" class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h2>Bonjour, <span id="student-name">Étudiant</span> 👋</h2>
+                <p class="subtitle">Comment te sens-tu aujourd'hui ?</p>
+            </div>
+            <div class="header-right">
+                <button id="logout-btn" class="btn btn-ghost">Déconnexion</button>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <!-- Mood Check Section -->
+            <section class="mood-section">
+                <div class="mood-card">
+                    <div class="mood-icon">❤️</div>
+                    <h3>Besoin d'aide ?</h3>
+                    <p>Si tu ne te sens pas bien, n'hésite pas à nous le faire savoir. Un conseiller sera informé et
+                        pourra t'aider.</p>
+                    <button id="start-test-btn" class="btn btn-alert">
+                        <span>🆘</span> Demander de l'aide
+                    </button>
+                </div>
+            </section>
+
+            <!-- Test Modal -->
+            <div id="test-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="test-title">Auto-évaluation</h3>
+                        <button id="close-test-btn" class="close-btn">×</button>
+                    </div>
+                    <div id="test-content" class="modal-body">
+                        <!-- Test questions will be injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interventions Section -->
+            <section class="interventions-section">
+                <h3>📋 Mes Interventions</h3>
+                <div id="interventions-list" class="interventions-list">
+                    <p class="empty-state">Aucune intervention pour le moment</p>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section class="history-section">
+                <h3>📊 Mon Historique</h3>
+                <div id="alerts-history" class="history-list">
+                    <p class="empty-state">Aucun historique</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="student-app.js"></script>
+</body>
+
+</html>
