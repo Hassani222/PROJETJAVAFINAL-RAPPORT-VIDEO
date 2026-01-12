@@ -13,6 +13,7 @@ public class Notification {
 
     @ManyToOne
     @JoinColumn(name = "utilisateur_id", nullable = false)
+    @com.fasterxml.jackson.databind.annotation.JsonDeserialize(as = Administrateur.class)
     private Utilisateur utilisateur;
 
     private String message;
