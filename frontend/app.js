@@ -253,6 +253,7 @@ function renderSettings() {
     <tr>
       <td colspan="5" style="padding: 2rem;">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          
           <!-- AI Config Section -->
           <div class="content-card" style="padding: 1.5rem; background: rgba(255,255,255,0.02);">
             <h3 style="margin-bottom: 1.5rem; color: var(--primary);">🤖 Intelligence Artificielle</h3>
@@ -266,14 +267,21 @@ function renderSettings() {
               </div>
             </div>
             <div class="form-group">
-              <label>Fréquence d'analyse (ms)</label>
+              <label>Modèle IA de référence</label>
               <select style="width: 100%; padding: 0.75rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: white;">
-                <option value="5000">Temps Réel (5s)</option>
-                <option value="30000" selected>Standard (30s)</option>
-                <option value="60000">Économique (1min)</option>
+                <option value="eg-v2-gen">General Purpose (V2)</option>
+                <option value="eg-v2-teen" selected>Spécialisé Adolescents</option>
+                <option value="eg-v2-nlp">NLP Sentiment Advanced</option>
               </select>
             </div>
-            <button class="btn btn-primary" onclick="animateSuccess()" style="width: 100%;">Sauvegarder l'IA</button>
+            <div class="form-group">
+              <label>Analyse de Sentiment Live</label>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <input type="checkbox" checked style="width: auto;">
+                <span class="small">Activer le monitoring continu des mots-clés</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="animateSuccess()" style="width: 100%;">Mettre à jour le moteur</button>
           </div>
 
           <!-- System Info Section -->
@@ -289,26 +297,49 @@ function renderSettings() {
                 <span style="font-weight: 600;">MySQL (Connecté)</span>
               </li>
               <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
-                <span style="color: var(--text-muted);">Temps d'exécution</span>
-                <span id="uptime-val">Calcul en cours...</span>
+                <span style="color: var(--text-muted);">Uptime Serveur</span>
+                <span id="uptime-val">Calcul...</span>
+              </li>
+              <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                <span style="color: var(--text-muted);">Stockage Data</span>
+                <span style="font-family: monospace;">1.2 GB / 10 GB</span>
               </li>
             </ul>
-            <div style="margin-top: 1.5rem;">
-               <button class="btn btn-ghost" style="width: 100%; border: 1px solid var(--danger); color: var(--danger);" onclick="alert('Action réservée au SuperAdmin')">Réinitialiser les Logs</button>
+            <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
+               <button class="btn btn-ghost" style="flex: 1; border: 1px solid var(--primary);" onclick="alert('Exportation CSV en cours...')">Backup DB</button>
+               <button class="btn btn-ghost" style="flex: 1; border: 1px solid var(--danger); color: var(--danger);" onclick="alert('Action réservée au SuperAdmin')">Clear Logs</button>
             </div>
           </div>
 
           <!-- User Profile Section -->
           <div class="content-card" style="padding: 1.5rem; background: rgba(255,255,255,0.02); grid-column: span 2;">
-            <h3 style="margin-bottom: 1.5rem;">👤 Profil Administrateur</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-              <div class="form-group">
-                <label>Nom complet</label>
-                <input type="text" value="${loggedAdmin?.nom || 'Admin'} ${loggedAdmin?.prenom || ''}" disabled>
+            <h3 style="margin-bottom: 1.5rem;">👤 Profil & Préférences</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+              <div>
+                <div class="form-group">
+                  <label>Nom complet</label>
+                  <input type="text" value="${loggedAdmin?.nom || 'Admin'} ${loggedAdmin?.prenom || ''}" disabled>
+                </div>
+                <div class="form-group">
+                  <label>Canal d'alerte privilégié</label>
+                  <select style="width: 100%; padding: 0.75rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                    <option>Dashboard Only</option>
+                    <option selected>Dashboard + Email</option>
+                    <option>Dashboard + Email + SMS (Urgent)</option>
+                  </select>
+                </div>
               </div>
-              <div class="form-group">
-                <label>Email de secours</label>
-                <input type="email" value="${loggedAdmin?.email || 'admin@ecole.com'}">
+              <div>
+                <div class="form-group">
+                  <label>Mode d'affichage</label>
+                  <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                    <button class="btn btn-primary btn-sm" style="flex: 1;">Dark Mode (Actif)</button>
+                    <button class="btn btn-ghost btn-sm" style="flex: 1; background: #fff; color: #000;">Light Mode</button>
+                  </div>
+                </div>
+                <div class="form-group" style="margin-top: 2rem;">
+                   <button class="btn btn-primary" style="width: 100%;" onclick="alert('Modifications enregistrées !')">Enregistrer les préférences</button>
+                </div>
               </div>
             </div>
           </div>
