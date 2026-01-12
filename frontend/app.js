@@ -235,6 +235,9 @@ function renderView(view) {
     } else if (view === 'interventions') {
       tableTitle.textContent = 'Suivi des Interventions';
       renderInterventionsTable();
+    } else if (view === 'settings') {
+      tableTitle.textContent = 'Paramètres du Système';
+      renderSettings();
     } else {
       tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding: 3rem;">Vue en cours de développement...</td></tr>';
       tableHead.innerHTML = '';
@@ -244,6 +247,97 @@ function renderView(view) {
 }
 
 // Table Rendering
+function renderSettings() {
+  tableHead.innerHTML = '';
+  tableBody.innerHTML = `
+    <tr>
+      <td colspan="5" style="padding: 2rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <!-- AI Config Section -->
+          <div class="content-card" style="padding: 1.5rem; background: rgba(255,255,255,0.02);">
+            <h3 style="margin-bottom: 1.5rem; color: var(--primary);">🤖 Intelligence Artificielle</h3>
+            <div class="form-group">
+              <label>Seuil de détection de détresse (%)</label>
+              <input type="range" min="10" max="90" value="75" class="slider" id="ai-threshold">
+              <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 0.5rem;">
+                <span>Sensible (10%)</span>
+                <span id="threshold-val">75%</span>
+                <span>Strict (90%)</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Fréquence d'analyse (ms)</label>
+              <select style="width: 100%; padding: 0.75rem; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: white;">
+                <option value="5000">Temps Réel (5s)</option>
+                <option value="30000" selected>Standard (30s)</option>
+                <option value="60000">Économique (1min)</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="animateSuccess()" style="width: 100%;">Sauvegarder l'IA</button>
+          </div>
+
+          <!-- System Info Section -->
+          <div class="content-card" style="padding: 1.5rem; background: rgba(255,255,255,0.02);">
+            <h3 style="margin-bottom: 1.5rem; color: var(--accent);">⚙️ État du Système</h3>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
+              <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                <span style="color: var(--text-muted);">Version Engine</span>
+                <span class="status-pill success" style="background: rgba(16,185,129,0.1);">v2.4.0-Stable</span>
+              </li>
+              <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                <span style="color: var(--text-muted);">Base de données</span>
+                <span style="font-weight: 600;">MySQL (Connecté)</span>
+              </li>
+              <li style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                <span style="color: var(--text-muted);">Temps d'exécution</span>
+                <span id="uptime-val">Calcul en cours...</span>
+              </li>
+            </ul>
+            <div style="margin-top: 1.5rem;">
+               <button class="btn btn-ghost" style="width: 100%; border: 1px solid var(--danger); color: var(--danger);" onclick="alert('Action réservée au SuperAdmin')">Réinitialiser les Logs</button>
+            </div>
+          </div>
+
+          <!-- User Profile Section -->
+          <div class="content-card" style="padding: 1.5rem; background: rgba(255,255,255,0.02); grid-column: span 2;">
+            <h3 style="margin-bottom: 1.5rem;">👤 Profil Administrateur</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div class="form-group">
+                <label>Nom complet</label>
+                <input type="text" value="${currentUser?.nom || 'Admin'} ${currentUser?.prenom || ''}" disabled>
+              </div>
+              <div class="form-group">
+                <label>Email de secours</label>
+                <input type="email" value="${currentUser?.email || 'admin@ecole.com'}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  `;
+
+  // Small logic for the range slider
+  const slider = document.getElementById('ai-threshold');
+  const val = document.getElementById('threshold-val');
+  if (slider && val) {
+    slider.oninput = function () { val.textContent = this.value + '%'; };
+  }
+
+  // Uptime simulation
+  const uptimeVal = document.getElementById('uptime-val');
+  if (uptimeVal) {
+    const startTime = Date.now() - 3600000 * 4; // 4 hours ago mocking
+    setInterval(() => {
+      const diff = Math.floor((Date.now() - startTime) / 1000);
+      const h = Math.floor(diff / 3600);
+      const m = Math.floor((diff % 3600) / 60);
+      const s = diff % 60;
+      uptimeVal.textContent = `${h}h ${m}m ${s}s`;
+    }, 1000);
+  }
+}
+
 function renderInterventionsTable() {
   tableHead.innerHTML = `
     <tr>
