@@ -304,11 +304,11 @@ function renderSettings() {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
               <div class="form-group">
                 <label>Nom complet</label>
-                <input type="text" value="${currentUser?.nom || 'Admin'} ${currentUser?.prenom || ''}" disabled>
+                <input type="text" value="${loggedAdmin?.nom || 'Admin'} ${loggedAdmin?.prenom || ''}" disabled>
               </div>
               <div class="form-group">
                 <label>Email de secours</label>
-                <input type="email" value="${currentUser?.email || 'admin@ecole.com'}">
+                <input type="email" value="${loggedAdmin?.email || 'admin@ecole.com'}">
               </div>
             </div>
           </div>
